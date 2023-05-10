@@ -17,3 +17,13 @@ Show logs (Ctrl+c to exit):
 ```
 docker logs samba-ad -f
 ```
+
+Run tests
+```
+docker exec samba-ad ad-test
+```
+
+Add more users
+```
+docker exec samba-ad ad-users 10 5
+```
