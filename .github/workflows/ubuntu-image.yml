@@ -42,3 +42,10 @@ jobs:
           docker buildx build --push \
             --tag ${{ env.DH_REGISTRY }}/${{env.DH_NAMESPACE }}/${{env.IMAGE_NAME}}:${{env.IMAGE_TAG}} \
             --platform linux/amd64,linux/arm64 .
+
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v3
+        with:
+          username: ${{ secrets.DH_USER }}
+          password: ${{ secrets.DH_KEY }}
+          repository: ${{ env.DH_REGISTRY }}
