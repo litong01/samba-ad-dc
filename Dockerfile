@@ -13,5 +13,6 @@ RUN apk add --no-cache samba-dc supervisor openldap-clients \
 EXPOSE 37/udp 53 88 135/tcp 139 389 
 
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./addon /usr/sbin
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["samba"]

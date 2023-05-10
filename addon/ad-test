@@ -1,0 +1,23 @@
+#!/bin/sh
+
+_info() {
+  local BLUE='\e[1;34m'
+  local YELLOW='\e[1;33m'
+  local NC='\e[0m'
+  local MESSAGE="$*"
+  printf "${BLUE}# $(hostname):${YELLOW} ${MESSAGE}${NC}\n"
+}
+
+SEARCH_DOMAIN=$(echo "${REALM}" | tr [:upper:] [:lower:])
+SEARCH_BASE=$(echo dc=${SEARCH_DOMAIN} | sed "s/\./,dc=/g")
+
+_info "nslookup \"$(hostname).${SEARCH_DOMAIN}\""
+nslookup "$(hostname).${SEARCH_DOMAIN}"
+
+_info 'ldapsearch -xLLL -s base namingContexts'
+ldapsearch -xLLL -s base namingContexts
+
+_info "ldapsearch -xLLL -b \"cn=administrator,cn=users,${SEARCH_BASE}\" -D \"cn=administrator,cn=users,${SEARCH_BASE}\""
+ldapsearch -xLLL -D "cn=administrator,cn=users,${SEARCH_BASE}" -w "${ADMIN_PASSWD}" -b "cn=administrator,cn=users,${SEARCH_BASE}"
+
+echo ""

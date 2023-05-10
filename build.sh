@@ -1,3 +1,3 @@
 #!/bin/bash
-docker build -t samba-ad:v0.1.0 .
+docker build -t tli551/samba-ad:v0.1.0 .
 

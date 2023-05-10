@@ -65,13 +65,14 @@ fi
 # _info "ldapsearch -xLLL -b \"cn=administrator,cn=users,${SEARCH_BASE}\" -D \"cn=administrator,cn=users,${SEARCH_BASE}\""
 # ldapsearch -xLLL -b "cn=administrator,cn=users,${SEARCH_BASE}" -D "cn=administrator,cn=users,${SEARCH_BASE}" -w "${ADMIN_PASSWD}"
 
-if [ ! -z "${USER_INDEX}" ]; then
+if [ ! -z "${USER_COUNT}" ]; then
   echo ""
-  noofusers=$((USER_INDEX))
+  noofusers=$((USER_COUNT))
   counter=$(( 0 ))
-  while [ $counter -le ${noofusers} ]; do
-    samba-tool user create johndoe${counter} --given-name John${counter} --surname Doe --random-password
-    samba-tool user setpassword johndoe0 --newpassword=${ADMIN_PASSWD} >/dev/null 2>&1
+  while [ $counter -lt ${noofusers} ]; do
+    samba-tool user create johndoe${counter} --given-name John${counter} --surname Doe${counter} \
+      --mail-address johndoe${counter}@test.example.com --random-password
+    samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} >/dev/null 2>&1
     counter=$((counter + 1))
   done
   echo -e "All user password: ${BLUE}${ADMIN_PASSWD}${NC}"
