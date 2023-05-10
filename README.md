@@ -1,6 +1,6 @@
 # samba-ad-dc
 
-[![gh-actions](https://github.com/tongli01/samba-ad-dc/actions/workflows/ubuntu-image.yml/badge.svg)](https://github.com/litong01/samba-ad-dc/actions/workflows/ubuntu-image.yml)
+[![gh-actions](https://github.com/tongli01/samba-ad-dc/actions/workflows/multi-arch-image.yml/badge.svg)](https://github.com/litong01/samba-ad-dc/actions/workflows/multi-arch-image.yml)
 
 Samba Active Directory Domain Controller Docker Image
 
@@ -26,4 +26,9 @@ docker exec samba-ad ad-test
 Add more users
 ```
 docker exec samba-ad ad-users 10 5
+```
+
+Deploy onto k8s as a service
+```
+kubectl apply -f https://raw.githubusercontent.com/litong01/samba-ad-dc/master/k8s/ad.yaml
 ```

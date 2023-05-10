@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: acldap
+  name: acldap
+spec:
+  ports:
+  - name: ldap
+    port: 389
+    protocol: TCP
+    targetPort: 389
+  selector:
+    app: acldap
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: acldap
+  name: acldap
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acldap
+  template:
+    metadata:
+      labels:
+        app: acldap
+    spec:
+      containers:
+      - image: tli551/samba-ad:v0.1.0
+        imagePullPolicy: IfNotPresent
+        name: acldap
+        securityContext:
+          privileged: true
+          runAsUser: 0
+        env:
+        - name: REALM
+          value: "example.org"
+        - name: DOMAIN
+          value: "EXAMPLE"
+        - name: ADMIN_PASSWD
+          value: "Passw0rd"
+        - name: USER_COUNT
+          value: "5"
