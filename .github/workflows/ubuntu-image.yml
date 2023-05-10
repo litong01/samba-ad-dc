@@ -48,4 +48,4 @@ jobs:
         with:
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_KEY }}
-          repository: ${{ env.DH_REGISTRY }}
+          repository: ${{ env.DH_REGISTRY }}/${{env.DH_NAMESPACE }}/${{env.IMAGE_NAME}}
