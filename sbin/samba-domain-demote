@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-# Exit if any error
-set -euo pipefail
-
-[[ "$#" -ge 1 ]] || { echo "Usage: samba-domain-demote <server>"; exit 1; }
-
-samba-tool domain demote --remove-other-dead-server="$1"
