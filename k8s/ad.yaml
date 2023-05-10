@@ -2,37 +2,37 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: acldap
-  name: acldap
+    app: samba-ad
+  name: samba-ad
 spec:
   ports:
-  - name: ldap
+  - name: sambaad
     port: 389
     protocol: TCP
     targetPort: 389
   selector:
-    app: acldap
+    app: samba-ad
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: acldap
-  name: acldap
+    app: samba-ad
+  name: samba-ad
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: acldap
+      app: samba-ad
   template:
     metadata:
       labels:
-        app: acldap
+        app: samba-ad
     spec:
       containers:
       - image: tli551/samba-ad:v0.1.0
         imagePullPolicy: IfNotPresent
-        name: acldap
+        name: samba-ad
         securityContext:
           privileged: true
           runAsUser: 0

@@ -10,7 +10,7 @@ RUN apk add --no-cache samba-dc supervisor openldap-clients \
     && ln -s /samba/log /var/log/samba
 
 # Expose ports
-EXPOSE 37/udp 53 88 135/tcp 139 389 
+EXPOSE 389 646 
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./addon /usr/sbin
