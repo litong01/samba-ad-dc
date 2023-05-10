@@ -10,7 +10,7 @@ docker run -d --privileged --name samba-ad  \
   -e REALM='corp.example.net' \
   -e DOMAIN='EXAMPLE' \
   -e ADMIN_PASSWD='Passw0rd' \
-  -e USER_COUNT=4  'tli551/samba-ad:v0.1.0'
+  -e USER_COUNT=5  'tli551/samba-ad:v0.1.0'
 ```
 
 Show logs (Ctrl+c to exit):
