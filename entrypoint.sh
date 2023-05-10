@@ -79,7 +79,14 @@ if [ ! -z "${USER_COUNT}" ]; then
 fi
 
 if [ "$1" = 'samba' ]; then
-    echo -e "bindDN: ${BLUE}cn=administrator,cn=users,${SEARCH_BASE}${NC}"
+    # We will also create a user which can be used for binding user
+    samba-tool user create admin --given-name Admin --mail-address admin@test.example.com --random-password
+    samba-tool user setpassword admin --newpassword=${ADMIN_PASSWD} >/dev/null 2>&1
+    samba-tool group addmembers "Domain Admins" admin >/dev/null 2>&1
+    echo -e "bindDN: ${BLUE}cn=Admin,cn=users,${SEARCH_BASE}${NC}"
+    echo -e "email: ${BLUE}admin@test.example.com${NC}"
+    echo -e "userPrincipalName: ${BLUE}admin@${SEARCH_DOMAIN}${NC}"
+    echo ""
     exec /usr/sbin/samba -i  >/dev/null 2>&1
 fi
 
