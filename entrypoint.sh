@@ -21,7 +21,8 @@ if [ ! -f /samba/etc/smb.conf ]; then
         --server-role=dc \
         --realm="${REALM}" \
         --option="dns forwarder=8.8.8.8" \
-        --option="bind interfaces only=no"
+        --option="bind interfaces only = no" \
+        --option="log level = 1 auth_audit:3"
     echo ""
     echo -e "Domain: ${BLUE}${DOMAIN}${NC} - Domain Provisioned Successfully"
 fi
@@ -56,14 +57,6 @@ fi
 if ! grep -q "ldap server require strong auth" /etc/samba/smb.conf; then
   sed -i 's/\[global\]/[global]\n\tldap server require strong auth = No/' /etc/samba/smb.conf
 fi
-
-# _info 'ldapsearch -xLLL -s base namingContexts'
-# ldapsearch -xLLL -s base namingContexts
-# 
-# SEARCH_BASE=$(echo dc=${SEARCH_DOMAIN} | sed "s/\./,dc=/g")
-# 
-# _info "ldapsearch -xLLL -b \"cn=administrator,cn=users,${SEARCH_BASE}\" -D \"cn=administrator,cn=users,${SEARCH_BASE}\""
-# ldapsearch -xLLL -b "cn=administrator,cn=users,${SEARCH_BASE}" -D "cn=administrator,cn=users,${SEARCH_BASE}" -w "${ADMIN_PASSWD}"
 
 if [ ! -z "${USER_COUNT}" ]; then
   echo ""
