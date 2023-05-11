@@ -35,7 +35,7 @@ kubectl apply -f https://raw.githubusercontent.com/litong01/samba-ad-dc/master/k
 
 Notes: Generated users will have the following characters:
 ``` 
-userid:  johndoe<num>    ex. johndoe1, johndoe2
+sAMAccountName(longon name):  johndoe<num>    ex. johndoe1, johndoe2
 user given name: John<num>    ex. John1, John2
 user sur name: Doe<num>    ex. Doe1, Doe2
 user email: johndoe<num>@test.example.com   ex. johndoe1@test.example.com
