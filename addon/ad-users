@@ -30,7 +30,7 @@ counter=$(( startIndex ))
 while [ "$counter" -lt ${noofusers} ]; do
   samba-tool user create johndoe${counter} --given-name John${counter} --surname Doe${counter} \
     --mail-address johndoe${counter}@test.example.com --random-password
-  samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} >/dev/null 2>&1
+  samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} -U administrator --password ${ADMIN_PASSWD} >/dev/null 2>&1
   counter=$((counter + 1))
 done
 

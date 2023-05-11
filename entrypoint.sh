@@ -22,7 +22,7 @@ if [ ! -f /samba/etc/smb.conf ]; then
         --realm="${REALM}" \
         --option="dns forwarder=8.8.8.8" \
         --option="bind interfaces only = no" \
-        --option="log level = 1 auth_audit:3"
+        --option="log level = 3 auth_audit:3"
     echo ""
     echo -e "Domain: ${BLUE}${DOMAIN}${NC} - Domain Provisioned Successfully"
 fi
@@ -65,7 +65,7 @@ if [ ! -z "${USER_COUNT}" ]; then
   while [ $counter -lt ${noofusers} ]; do
     samba-tool user create johndoe${counter} --given-name John${counter} --surname Doe${counter} \
       --mail-address johndoe${counter}@test.example.com --random-password
-    samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} >/dev/null 2>&1
+    samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} -U administrator --password ${ADMIN_PASSWD} >/dev/null 2>&1
     counter=$((counter + 1))
   done
   echo -e "All user password: ${BLUE}${ADMIN_PASSWD}${NC}"
@@ -74,7 +74,7 @@ fi
 if [ "$1" = 'samba' ]; then
     # We will also create a user which can be used for binding user
     samba-tool user create admin --given-name Admin --mail-address admin@test.example.com --random-password
-    samba-tool user setpassword admin --newpassword=${ADMIN_PASSWD} >/dev/null 2>&1
+    samba-tool user setpassword admin --newpassword=${ADMIN_PASSWD} -U administrator --password ${ADMIN_PASSWD} >/dev/null 2>&1
     samba-tool group addmembers "Domain Admins" admin >/dev/null 2>&1
     echo -e "bindDN: ${BLUE}cn=Admin,cn=users,${SEARCH_BASE}${NC}"
     echo -e "email: ${BLUE}admin@test.example.com${NC}"
