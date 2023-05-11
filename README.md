@@ -18,7 +18,7 @@ Show logs (Ctrl+c to exit):
 docker logs samba-ad -f
 ```
 
-Run tests
+Run tests and list current users
 ```
 docker exec samba-ad ad-test
 ```
@@ -31,4 +31,13 @@ docker exec samba-ad ad-users 10 5
 Deploy onto k8s as a service
 ```
 kubectl apply -f https://raw.githubusercontent.com/litong01/samba-ad-dc/master/k8s/ad.yaml
+```
+
+Notes: Generated users will have the following characters:
+``` 
+userid:  johndoe<num>    ex. johndoe1, johndoe2
+user given name: John<num>    ex. John1, John2
+user sur name: Doe<num>    ex. Doe1, Doe2
+user email: johndoe<num>@test.example.com   ex. johndoe1@test.example.com
+user PrincipalName: johndoe<num>@<REALM>   ex. johndoe1@corp.example.net
 ```

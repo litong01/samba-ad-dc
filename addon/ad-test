@@ -20,4 +20,7 @@ ldapsearch -xLLL -s base namingContexts
 _info "ldapsearch -xLLL -b \"cn=administrator,cn=users,${SEARCH_BASE}\" -D \"cn=administrator,cn=users,${SEARCH_BASE}\""
 ldapsearch -xLLL -D "cn=administrator,cn=users,${SEARCH_BASE}" -w "${ADMIN_PASSWD}" -b "cn=administrator,cn=users,${SEARCH_BASE}"
 
+_info "ldapsearch -xLLL -b \"cn=users,${SEARCH_BASE}\" -s sub \"givenName=John*\" -D \"cn=administrator,cn=users,${SEARCH_BASE}\""
+ldapsearch -xLLL -D "cn=administrator,cn=users,${SEARCH_BASE}" -w "${ADMIN_PASSWD}" -b "cn=users,${SEARCH_BASE}" -s sub "givenName=John*"
+
 echo ""
