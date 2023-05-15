@@ -43,6 +43,6 @@ user PrincipalName: johndoe<num>@<REALM>   ex. johndoe1@example.org
 ```
 
 You may choose to customize the realm by specify different REALM when create the docker container
-or Kubernetes pod. You can may further customize users by following how users get created in script
+or Kubernetes pod. You may further customize users by following how users get created in script
 /usr/sbin/ad-users. With this container image, you can create any realm and any number of users as
 you like.
