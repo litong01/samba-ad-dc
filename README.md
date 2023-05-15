@@ -7,7 +7,7 @@ Samba Active Directory Domain Controller Docker Image
 Provision a new domain and create 5 users:
 ```
 docker run -d --privileged --name samba-ad  \
-  -e REALM='corp.example.net' \
+  -e REALM='example.org' \
   -e DOMAIN='EXAMPLE' \
   -e ADMIN_PASSWD='Passw0rd' \
   -e USER_COUNT=5  'tli551/samba-ad:v0.1.0'
@@ -38,6 +38,11 @@ Notes: Generated users will have the following characters:
 sAMAccountName(longon name):  johndoe<num>    ex. johndoe1, johndoe2
 user given name: John<num>    ex. John1, John2
 user sur name: Doe<num>    ex. Doe1, Doe2
-user email: johndoe<num>@test.example.com   ex. johndoe1@test.example.com
-user PrincipalName: johndoe<num>@<REALM>   ex. johndoe1@corp.example.net
+user email: johndoe<num>@mail.<REALM>   ex. johndoe1@mail.example.org
+user PrincipalName: johndoe<num>@<REALM>   ex. johndoe1@example.org
 ```
+
+You may choose to customize the realm by specify different REALM when create the docker container
+or Kubernetes pod. You can may further customize users by following how users get created in script
+/usr/sbin/ad-users. With this container image, you can create any realm and any number of users as
+you like.

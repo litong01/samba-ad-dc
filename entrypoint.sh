@@ -10,6 +10,7 @@ if [ "${1:0:1}" = '-' ]; then
 fi
 
 BLUE='\e[1;34m'
+GREEN='\e[0;32m' 
 NC='\e[0m'
 
 # Configure the AD DC
@@ -64,21 +65,21 @@ if [ ! -z "${USER_COUNT}" ]; then
   counter=$(( 0 ))
   while [ $counter -lt ${noofusers} ]; do
     samba-tool user create johndoe${counter} --given-name John${counter} --surname Doe${counter} \
-      --mail-address johndoe${counter}@test.example.com --random-password
+      --mail-address johndoe${counter}@mail.${SEARCH_DOMAIN} --random-password
     samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} -U administrator --password ${ADMIN_PASSWD} >/dev/null 2>&1
     counter=$((counter + 1))
   done
-  echo -e "All user password: ${BLUE}${ADMIN_PASSWD}${NC}"
+  echo -e "All user password: ${GREEN}${ADMIN_PASSWD}${NC}"
 fi
 
 if [ "$1" = 'samba' ]; then
     # We will also create a user which can be used for binding user
-    samba-tool user create admin --given-name Admin --mail-address admin@test.example.com --random-password
+    samba-tool user create admin --given-name Admin --mail-address admin@mail.${SEARCH_DOMAIN} --random-password
     samba-tool user setpassword admin --newpassword=${ADMIN_PASSWD} -U administrator --password ${ADMIN_PASSWD} >/dev/null 2>&1
     samba-tool group addmembers "Domain Admins" admin >/dev/null 2>&1
-    echo -e "bindDN: ${BLUE}cn=Admin,cn=users,${SEARCH_BASE}${NC}"
-    echo -e "email: ${BLUE}admin@test.example.com${NC}"
-    echo -e "userPrincipalName: ${BLUE}admin@${SEARCH_DOMAIN}${NC}"
+    echo -e "bindDN: ${GREEN}cn=Admin,cn=users,${SEARCH_BASE}${NC}"
+    echo -e "email: ${GREEN}admin@mail.${SEARCH_DOMAIN}${NC}"
+    echo -e "userPrincipalName: ${GREEN}admin@${SEARCH_DOMAIN}${NC}"
     echo ""
     exec /usr/sbin/samba -i  >/dev/null 2>&1
 fi

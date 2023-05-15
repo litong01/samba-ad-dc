@@ -1,22 +1,16 @@
 #!/bin/sh
 
-BLUE='\e[1;34m'
-YELLOW='\e[1;33m'
+GREEN='\e[0;32m'
 NC='\e[0m'
-
-_info() {
-  local MESSAGE="$*"
-  printf "${BLUE}# $(hostname):${YELLOW} ${MESSAGE}${NC}\n"
-}
 
 startIndex=${1}
 noofusers=${2}
 if [ -z "${startIndex}" ] || [ -z "${noofusers}" ]; then
-  echo -e "${YELLOW}Please provide start index and no of users to add${NC}"
+  echo -e "${GREEN}Please provide start index and no of users to add${NC}"
   echo "Usage:"
   echo "    ${0} <startIndex> <noofusers>"
   echo ""
-  echo "For example: ${BLUE}${0} 5 3${NC}"
+  echo -e "For example: ${GREEN}${0} 5 3${NC}"
   echo "   This command will add johndoe5, johndoe6, johndoe7 to Active Directory"
   echo "   All user passwords will be the same as the admin password"
   exit 0
@@ -29,7 +23,7 @@ SEARCH_BASE=$(echo dc=${SEARCH_DOMAIN} | sed "s/\./,dc=/g")
 counter=$(( startIndex ))
 while [ "$counter" -lt ${noofusers} ]; do
   samba-tool user create johndoe${counter} --given-name John${counter} --surname Doe${counter} \
-    --mail-address johndoe${counter}@test.example.com --random-password
+    --mail-address johndoe${counter}@mail.${SEARCH_DOMAIN} --random-password
   samba-tool user setpassword johndoe${counter} --newpassword=${ADMIN_PASSWD} -U administrator --password ${ADMIN_PASSWD} >/dev/null 2>&1
   counter=$((counter + 1))
 done
