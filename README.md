@@ -13,9 +13,9 @@ docker run -d --privileged --name samba-ad  \
   -e USER_COUNT=5  'tli551/samba-ad:v0.1.0'
 ```
 
-Show logs (Ctrl+c to exit):
+Show logs to display created realm, users, and password:
 ```
-docker logs samba-ad -f
+docker logs samba-ad
 ```
 
 Run tests and list current users
