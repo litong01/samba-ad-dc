@@ -2,7 +2,7 @@
 
 [![gh-actions](https://github.com/tongli01/samba-ad-dc/actions/workflows/multi-arch-image.yml/badge.svg)](https://github.com/litong01/samba-ad-dc/actions/workflows/multi-arch-image.yml)
 
-Samba Active Directory Domain Controller Docker Image
+Samba Active Directory Domain Controller container image
 
 Provision a new domain and create 5 users:
 ```
