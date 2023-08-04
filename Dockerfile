@@ -1,6 +1,6 @@
 FROM alpine:3.17.3
 
-RUN apk add --no-cache samba-dc supervisor openldap-clients \
+RUN apk add --no-cache samba-dc supervisor openldap-clients openssl \
     # Remove default config data, if any
     && rm -rf /etc/samba/smb.conf \
     && rm -rf /var/lib/samba \
@@ -10,7 +10,7 @@ RUN apk add --no-cache samba-dc supervisor openldap-clients \
     && ln -s /samba/log /var/log/samba
 
 # Expose ports
-EXPOSE 389
+EXPOSE 389 636
 
 COPY ./entrypoint.sh /entrypoint.sh
 COPY ./addon /usr/sbin

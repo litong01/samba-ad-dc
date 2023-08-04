@@ -12,6 +12,7 @@ fi
 BLUE='\e[1;34m'
 GREEN='\e[0;32m' 
 NC='\e[0m'
+TLS_PATH=/var/lib/samba/private/tls
 
 # Configure the AD DC
 if [ ! -f /samba/etc/smb.conf ]; then
@@ -21,6 +22,10 @@ if [ ! -f /samba/etc/smb.conf ]; then
         --adminpass="${ADMIN_PASSWD}" \
         --server-role=dc \
         --realm="${REALM}" \
+        --option="tls enabled = yes" \
+        --option="tls keyfile = ${TLS_PATH}/key.pem" \
+        --option="tls certfile = ${TLS_PATH}/cert.pem" \
+        --option="tls cafile = " \
         --option="dns forwarder=8.8.8.8" \
         --option="bind interfaces only = no" \
         --option="log level = 3 auth_audit:3"
@@ -57,6 +62,19 @@ fi
 # Allow insecure LDAP requests
 if ! grep -q "ldap server require strong auth" /etc/samba/smb.conf; then
   sed -i 's/\[global\]/[global]\n\tldap server require strong auth = No/' /etc/samba/smb.conf
+fi
+
+# Generate certificate to use with LDAPS requests
+if [ ! -f ${TLS_PATH}/key.pem ]; then
+    echo ""
+    echo -e "generating certificate at ${TLS_PATH}"
+    openssl req -x509 -sha256 -days 365 -nodes -newkey rsa:2048 \
+        -subj "/CN=samba-ad.samba.svc" \
+        -keyout ${TLS_PATH}/key.pem \
+        -out ${TLS_PATH}/cert.pem
+    echo ""
+    echo -e "cert.pem: \n$(cat ${TLS_PATH}/cert.pem)"
+    echo ""
 fi
 
 if [ ! -z "${USER_COUNT}" ]; then

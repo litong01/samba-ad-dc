@@ -10,6 +10,10 @@ spec:
     port: 389
     protocol: TCP
     targetPort: 389
+  - name: sambaadtls
+    port: 636
+    protocol: TCP
+    targetPort: 636
   selector:
     app: samba-ad
 ---
