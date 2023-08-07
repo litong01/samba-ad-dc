@@ -66,10 +66,15 @@ fi
 
 # Generate certificate to use with LDAPS requests
 if [ ! -f ${TLS_PATH}/key.pem ]; then
+    # default to REALM env var but if in k8s, build it based on the namespace
+    FQDN="${REALM}"
+    if [ -d /var/run/secrets/kubernetes.io ]; then
+        FQDN="samba-ad.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc"
+    fi
     echo ""
-    echo -e "generating certificate at ${TLS_PATH}"
+    echo -e "generating certificate at ${TLS_PATH} with FQDN ${FQDN}"
     openssl req -x509 -sha256 -days 365 -nodes -newkey rsa:2048 \
-        -subj "/CN=samba-ad.samba.svc" \
+        -subj "/CN=${FQDN}" \
         -keyout ${TLS_PATH}/key.pem \
         -out ${TLS_PATH}/cert.pem
     echo ""

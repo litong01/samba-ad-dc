@@ -10,7 +10,7 @@ docker run -d --privileged --name samba-ad  \
   -e REALM='example.org' \
   -e DOMAIN='EXAMPLE' \
   -e ADMIN_PASSWD='Passw0rd' \
-  -e USER_COUNT=5  'tli551/samba-ad:v0.1.0'
+  -e USER_COUNT=5  'tli551/samba-ad:v0.2.0'
 ```
 
 Show logs to display created realm, users, and password:

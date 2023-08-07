@@ -34,7 +34,7 @@ spec:
         app: samba-ad
     spec:
       containers:
-      - image: tli551/samba-ad:v0.1.0
+      - image: tli551/samba-ad:v0.2.0
         imagePullPolicy: IfNotPresent
         name: samba-ad
         securityContext:
